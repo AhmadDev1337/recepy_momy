@@ -1,4 +1,4 @@
-// ignore_for_file: unused_field, unnecessary_null_comparison, avoid_print, avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables, depend_on_referenced_packages, unnecessary_import, deprecated_member_use
+// ignore_for_file: unused_field, unnecessary_null_comparison, avoid_print, avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables, depend_on_referenced_packages, unnecessary_import, deprecated_member_use, use_super_parameters, duplicate_ignore, sized_box_for_whitespace
 
 import 'dart:convert';
 import 'dart:developer';
@@ -41,6 +41,7 @@ class JsonData {
 }
 
 class DessertPage extends StatefulWidget {
+  // ignore: use_super_parameters
   const DessertPage({Key? key}) : super(key: key);
 
   @override

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, unused_field, avoid_unnecessary_containers, deprecated_member_use
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, unused_field, avoid_unnecessary_containers, deprecated_member_use, use_super_parameters
 
 import 'dart:convert';
 import 'dart:developer';
