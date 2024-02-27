@@ -209,7 +209,7 @@ class _LunchPageState extends State<LunchPage> {
   }
 
   int currentPage = 0;
-  final int itemsPerPage = 3;
+  final int itemsPerPage = 5;
   final int storiesPerRow = 2;
 
   void goToNextPage() {
