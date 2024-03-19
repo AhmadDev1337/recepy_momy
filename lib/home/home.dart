@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, unused_field, avoid_unnecessary_containers, deprecated_member_use, use_super_parameters
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, unused_field, avoid_unnecessary_containers, deprecated_member_use, use_super_parameters, prefer_final_fields
 
 import 'dart:convert';
 import 'dart:developer';
@@ -53,6 +53,15 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   List<JsonData> jsonDataList = [];
   InterstitialAd? _interstitialAd;
+  final TextEditingController _searchController = TextEditingController();
+  List<JsonData> filteredJsonDataList = [];
+  String _searchText = '';
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   void _loadInterstitialAd() {
     InterstitialAd.load(
@@ -74,36 +83,48 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    fetchData();
+    fetchJsonsData();
     _loadInterstitialAd();
   }
 
-  Future<void> fetchData() async {
+  void _filterJson(String searchText) {
+    setState(() {
+      filteredJsonDataList = jsonDataList
+          .where((jsonData) =>
+              jsonData.subtitle
+                  .toLowerCase()
+                  .contains(searchText.toLowerCase()) ||
+              jsonData.title.toLowerCase().contains(searchText.toLowerCase()))
+          .toList();
+    });
+  }
+
+  Future<void> fetchJsonsData() async {
     const singleJsonUrl = 'https://pastebin.com/raw/62etf70C';
 
     try {
       final response = await http.get(Uri.parse(singleJsonUrl));
       if (response.statusCode == 200) {
         final jsonData = json.decode(response.body);
-        jsonDataList = jsonData.map<JsonData>((data) {
-          return JsonData(
-            imgUrl: data['imgUrl'],
-            bgUrl: data['bgUrl'],
-            title: data['title'],
-            subtitle: data['subtitle'],
-            score: data['score'],
-            time: data['time'],
-            from: data['from'],
-            desc: data['desc'],
-            ingredients: List.from(data['ingredients']),
-            steps: List.from(data['steps']),
-            foods: List.from(
-              data['foods'],
-            ),
-          );
-        }).toList();
-
-        setState(() {});
+        setState(() {
+          jsonDataList = (jsonData as List)
+              .map((data) => JsonData(
+                    imgUrl: data['imgUrl'],
+                    bgUrl: data['bgUrl'],
+                    title: data['title'],
+                    subtitle: data['subtitle'],
+                    score: data['score'],
+                    time: data['time'],
+                    from: data['from'],
+                    desc: data['desc'],
+                    ingredients:
+                        List<Map<String, dynamic>>.from(data['ingredients']),
+                    steps: List<Map<String, dynamic>>.from(data['steps']),
+                    foods: List<Map<String, dynamic>>.from(data['foods']),
+                  ))
+              .toList();
+          filteredJsonDataList = List.from(jsonDataList);
+        });
       } else {
         Scaffold(
           backgroundColor: Colors.white,
@@ -235,16 +256,21 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Center(
                           child: Icon(
-                            IconlyLight.search,
+                            Icons.search,
                             color: Color.fromARGB(255, 241, 106, 53),
                           ),
                         ),
                         SizedBox(width: 10),
-                        Center(
-                          child: Text(
-                            "Find any recipe here..",
-                            style: TextStyle(
-                                fontSize: 15, color: Colors.grey.shade500),
+                        Expanded(
+                          child: TextField(
+                            onChanged: _filterJson,
+                            cursorColor: Colors.grey,
+                            decoration: InputDecoration(
+                              hintText: "Find any recipe here..",
+                              hintStyle: TextStyle(
+                                  fontSize: 15, color: Colors.grey.shade500),
+                              border: InputBorder.none,
+                            ),
                           ),
                         ),
                       ],
@@ -355,9 +381,9 @@ class _HomePageState extends State<HomePage> {
             ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: jsonDataList.length,
+              itemCount: filteredJsonDataList.length,
               itemBuilder: (context, index) {
-                JsonData jsonData = jsonDataList[index];
+                final jsonData = filteredJsonDataList[index];
 
                 return Column(
                   children: [
