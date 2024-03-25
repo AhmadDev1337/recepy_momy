@@ -7,7 +7,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:http/http.dart' as http;
-import 'package:iconly/iconly.dart';
 
 import 'categories/breakfast_page.dart';
 import 'categories/dessert_page.dart';
@@ -195,7 +194,7 @@ class _HomePageState extends State<HomePage> {
             Container(
               height: 220,
               padding:
-                  EdgeInsets.only(top: 40, left: 15, right: 15, bottom: 30),
+                  EdgeInsets.only(top: 30, left: 15, right: 15, bottom: 30),
               decoration: BoxDecoration(
                 color: Color.fromARGB(255, 241, 106, 53),
                 borderRadius: BorderRadius.only(
@@ -204,42 +203,25 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SvgPicture.asset(
-                        "assets/icons/chef-svgrepo-com.svg",
-                        width: 50,
+                      Text(
+                        "Hello, Chef!",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                            fontSize: 20),
                       ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Hello, Chef!",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white),
-                                ),
-                                SizedBox(height: 5),
-                                Text(
-                                  "Check Amazing Recipes..",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 12,
-                                      color: Colors.white),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                      SizedBox(height: 2),
+                      Text(
+                        "Check Amazing Recipes..",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 13,
+                            color: Colors.white),
                       ),
                     ],
                   ),
@@ -284,24 +266,13 @@ class _HomePageState extends State<HomePage> {
             ),
             Padding(
               padding: const EdgeInsets.all(20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Categories",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20),
-                  ),
-                  Text(
-                    "...",
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 241, 106, 53),
-                        fontWeight: FontWeight.w500,
-                        fontSize: 13),
-                  ),
-                ],
+              child: Text(
+                "Categories",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20,
+                ),
               ),
             ),
             Padding(
@@ -358,24 +329,13 @@ class _HomePageState extends State<HomePage> {
             ),
             Padding(
               padding: const EdgeInsets.all(20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Popular Recipes",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20),
-                  ),
-                  Text(
-                    "...",
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 241, 106, 53),
-                        fontWeight: FontWeight.w500,
-                        fontSize: 13),
-                  ),
-                ],
+              child: Text(
+                "Popular Recipes",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20,
+                ),
               ),
             ),
             ListView.builder(
@@ -511,25 +471,6 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                             ),
-                            Positioned(
-                              top: 10,
-                              right: 10,
-                              child: Container(
-                                padding: EdgeInsets.all(8),
-                                height: 40,
-                                width: 40,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.white,
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    IconlyLight.heart,
-                                    color: Colors.grey.shade400,
-                                  ),
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                       ),
@@ -613,23 +554,6 @@ class _DetailPageState extends State<DetailPage> {
             right: 0,
             child: Image.network(
               bgUrl,
-            ),
-          ),
-          Positioned(
-            top: 40,
-            right: 20,
-            child: Container(
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-              ),
-              child: Center(
-                child: Icon(
-                  IconlyLight.heart,
-                  size: 20,
-                ),
-              ),
             ),
           ),
           Positioned(
